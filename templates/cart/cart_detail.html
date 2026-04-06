@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Cart</h2>
+
+{% for item in items %}
+    <div>
+        <p>{{ item.product.title }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Price: ${{ item.product.price }}</p>
+        <p>Subtotal: ${{ item.product.price|floatformat:2 }}</p>
+        <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+    </div>
+    <hr>
+{% empty %}
+    <p>Your cart is empty.</p>
+{% endfor %}
+
+<h3>Total: ${{ total }}</h3>
+
+<a href="{% url 'checkout' %}">Proceed to Checkout</a>
+{% endblock %}

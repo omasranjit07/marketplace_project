@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-^d@$f_o8j%q9+_m0(ewb5$7i5-e3#1spqxhxh*3n)$35vzjm1&
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -130,7 +131,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 
-
+STRIPE_SECRET_KEY = ''
+STRIPE_PUBLIC_KEY = ''
 
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'

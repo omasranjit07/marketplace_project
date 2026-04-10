@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-^d@$f_o8j%q9+_m0(ewb5$7i5-e3#1spqxhxh*3n)$35vzjm1&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['marketplace-project-app.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition

@@ -8,6 +8,9 @@
         <p>{{ product.title }}</p>
         <p>${{ product.price }}</p>
         <p>Stock: {{ product.stock }}</p>
+
+        <a href="{% url 'edit_product' product.id %}">Edit</a>
+        <a href="{% url 'delete_product' product.id %}">Delete</a>
     </div>
     <hr>
 {% empty %}

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,9 +25,7 @@ SECRET_KEY = 'django-insecure-^d@$f_o8j%q9+_m0(ewb5$7i5-e3#1spqxhxh*3n)$35vzjm1&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '[::1]']
 
 # Application definition
 
@@ -37,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     
     'users',
     'products',
@@ -129,3 +129,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
+
+STRIPE_SECRET_KEY = 'sk_test_51TJiAKDWiQ3HWgDTDqP462BkBoVMb8rnaGzKGO0M0hcJmwYZ9ZrIL5Mft4ovuffsCXnenlbcFiAgFggZasqgTnhG00P3whldfm'
+STRIPE_PUBLIC_KEY = 'pk_test_51TJiAKDWiQ3HWgDTrZ4RNVij88nC1M3XfCu1Uk5E7HzaVjZaz2Iu14rogIf5vFHtFdZbOywcGQBXlV4h3fZKC6nR00qjIGwUgx'
+
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

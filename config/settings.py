@@ -130,8 +130,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 
-STRIPE_SECRET_KEY = ''
-STRIPE_PUBLIC_KEY = ''
+
 
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'

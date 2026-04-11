@@ -29,10 +29,11 @@ SECRET_KEY = 'django-insecure-^d@$f_o8j%q9+_m0(ewb5$7i5-e3#1spqxhxh*3n)$35vzjm1&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = os.getenv(
-    'ALLOWED_HOSTS',
-    'marketplace-project-app.onrender.com,localhost,127.0.0.1'
-).split(',')
+ALLOWED_HOSTS = [
+    'marketplace-project-app.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -88,8 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')
     )
 }
 

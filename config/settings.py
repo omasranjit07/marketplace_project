@@ -29,7 +29,10 @@ SECRET_KEY = 'django-insecure-^d@$f_o8j%q9+_m0(ewb5$7i5-e3#1spqxhxh*3n)$35vzjm1&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['marketplace-project-app.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.getenv(
+    'ALLOWED_HOSTS',
+    'marketplace-project-app.onrender.com,localhost,127.0.0.1'
+).split(',')
 
 
 # Application definition
@@ -144,5 +147,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -75,25 +75,24 @@ def my_products(request):
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
 
-    if product.seller_id != request.user.id:
+    if not product.seller or product.seller.pk != request.user.pk:
         return HttpResponseForbidden('You are not allowed')
 
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('my_products')
+            return redirect('product_list')
     else:
         form = ProductForm(instance=product)
-
-    return render(request, 'products/edit_product.html', {'form': form})
-
+    
+    return render(request, 'products/edit_product.html', {'form': form, 'product': product})
 
 @login_required
 def delete_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
 
-    if product.seller_id != request.user.id:
+    if not product.seller or product.seller.pk != request.user.pk:
         return HttpResponseForbidden('You are not allowed')
 
     product.delete()

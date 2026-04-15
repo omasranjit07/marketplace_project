@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from .models import CartItem
 from products.models import Product
 
-
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)

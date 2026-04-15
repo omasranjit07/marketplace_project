@@ -1,6 +1,7 @@
 import stripe
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from cart.models import CartItem
@@ -12,12 +13,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def stripe_checkout(request):
     cart_items = CartItem.objects.filter(user=request.user)
-
-    if not cart_items.exists():
-        return redirect('cart_detail')
-
     line_items = []
-
     for item in cart_items:
         line_items.append({
             'price_data': {
@@ -29,7 +25,7 @@ def stripe_checkout(request):
             },
             'quantity': item.quantity,
         })
-
+    
     session = stripe.checkout.Session.create(
         payment_method_types=['card'],
         line_items=line_items,

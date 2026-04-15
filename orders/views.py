@@ -2,10 +2,12 @@ import stripe
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from cart.models import CartItem
 from .models import Order, OrderItem
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 @login_required
 def stripe_checkout(request):
@@ -32,13 +34,14 @@ def stripe_checkout(request):
         payment_method_types=['card'],
         line_items=line_items,
         mode='payment',
-
-        # 👇 IMPORTANT: pass session_id back
-        success_url='http://127.0.0.1:8000/orders/success/?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url='http://127.0.0.1:8000/cart/',
+        success_url=request.build_absolute_uri(reverse('payment_success')) + '?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url=request.build_absolute_uri(reverse('cart_detail')),
     )
 
-    return redirect(session.url)
+    if session.url:
+        return redirect(session.url)
+    return redirect('cart_detail')
+
 
 @login_required
 def checkout(request):
@@ -62,7 +65,7 @@ def checkout(request):
             quantity=item.quantity,
             price=item.product.price
         )
-    
+
     for item in cart_items:
         if item.quantity > item.product.stock:
             return redirect('cart_detail')
@@ -74,15 +77,18 @@ def checkout(request):
 
     return render(request, 'orders/order_success.html', {'order': order})
 
+
 @login_required
 def order_history(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'orders/order_history.html', {'orders': orders})
 
+
 @login_required
 def order_detail(request, pk):
     order = get_object_or_404(Order, pk=pk, user=request.user)
     return render(request, 'orders/order_detail.html', {'order': order})
+
 
 @login_required
 def payment_success(request):
@@ -96,7 +102,6 @@ def payment_success(request):
     except Exception:
         return redirect('cart_detail')
 
-    # Verify payment
     if session.payment_status != 'paid':
         return redirect('cart_detail')
 
@@ -106,7 +111,6 @@ def payment_success(request):
     if not cart_items.exists():
         return redirect('product_list')
 
-    # Prevent duplicate orders
     if Order.objects.filter(stripe_session_id=session_id).exists():
         return redirect('product_list')
 

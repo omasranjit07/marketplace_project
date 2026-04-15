@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h2>Order Details</h2>
 
 <p>Order ID: {{ order.id }}</p>
@@ -5,6 +8,9 @@
 
 <h3>Items:</h3>
 
-{% for item in order.items.all %}
+{% for item in order.orderitem_set.all %}
     <p>{{ item.product.title }} - {{ item.quantity }}</p>
+{% empty %}
+    <p>No items found for this order.</p>
 {% endfor %}
+{% endblock %}

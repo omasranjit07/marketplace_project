@@ -4,8 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
 
+
 def home_redirect(request):
     return redirect('product_list')
+
 
 urlpatterns = [
     path('', home_redirect),
@@ -15,7 +17,7 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('orders/', include('orders.urls')),
     path('api/', include('products.api.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

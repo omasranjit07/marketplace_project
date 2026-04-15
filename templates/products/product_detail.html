@@ -24,7 +24,7 @@
 <p>{{ product.description }}</p>
 <p>Price: ${{ product.price }}</p>
 <p>Stock: {{ product.stock }}</p>
-<p>Seller: {{ product.seller.username }}</p>
+<p>Seller: {% if product.seller %}{{ product.seller.username }}{% else %}Unknown{% endif %}</p>
 
 <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
 {% endblock %}
